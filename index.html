@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Perl Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css" />
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="errors-container">
+
+    </div>
+    <div class="new-appointment-container">
+      <button id="new-appt-btn">New</button>
+      <form id="new-appt-form" action="bin/index.cgi" method="POST">
+        <input name="date" type="text" placeholder="Date" />
+        <input name="time" type="text" placeholder="Time" />
+        <input name="desc" type="text" placeholder="Description" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <div class="search-container" action="bin/index.cgi" method="GET">
+      <input id="search-input" type="text" placeholder="Search Appointments" /> 
+      <button id="search-submit">Submit</button>
+    </div>
+    <div class="appointments-table-container">
+      <table id="appts-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <!-- tbody populated by renderAppointments() function -->
+        <tbody></tbody>
+      </table>
+    </div>
+    <script type="text/javascript" src="./main.js"></script>
+  </body>
+</html>
