@@ -69,7 +69,7 @@ function getAppointments(searchText="") {
   });
 }
 
-// Returns null if date or time are invalid.
+// Returns null and displays errors if date or time are invalid.
 // otherwise, returns ISO date str
 function getDateTimeStr(formId) {
   let dateIn = $(`${formId} > input[name='date']`).val().trim(),
@@ -78,8 +78,7 @@ function getDateTimeStr(formId) {
   //If all is well, these should be in the format '10/04/2017' and '07:32' resp.
   let dateStr = dateIn + ' ' + timeIn + ":00";
 
-  if(isNaN(Date.parse(dateStr))) {
-    //Try and alert what went wrong
+  if(isNaN(Date.parse(dateStr))) { //Try and alert what went wrong
     if(isNaN(Date.parse(dateIn))) {
       $(`${formId} > input[name='date']`).val('Invalid date.');
     } 
@@ -89,15 +88,15 @@ function getDateTimeStr(formId) {
       $(`${formId} > input[name='time']`).val('Invalid time.');
     }
 
-    console.log("Problem with datestr", dateStr);
-
     return null;
-  } 
 
-  dateStr = new Date(dateStr).toISOString();
+  } else if(Date.parse(dateStr)-Date.parse(new Date()) < 0) {//Ensure date is in the future
+    $(`${formId} > input[name='time']`).val('Date must be in the future.');
+    return null;
+  }
 
-  console.log("Got datestr from inputs: ", dateStr);
-  return dateStr;
+  dateStr = new Date(dateStr);
+  return dateStr.toISOString();;
 
 }
 
@@ -110,8 +109,6 @@ function postAppointment(formId) {
   if(!dts) return;
 
   pdata = encodeURI(pdata + `&date_time=${dts}`);
-
-  console.log('Posting appt data: ', pdata);
   
 
   $.post('bin/index.cgi', pdata).then(() => {
