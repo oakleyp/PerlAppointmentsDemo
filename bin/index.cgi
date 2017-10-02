@@ -63,12 +63,7 @@ if(length($apptdate) && length($appttime) && length($apptdesc)) {
   my $sth = $dbh->prepare("INSERT INTO appointments (date, time, description) VALUES (?,?,?)");
   $sth->execute($apptdate, $appttime, $apptdesc);
 
-} elsif (length($q->param("new-appt-submit"))) {
-
-  my @errors = ("Fields cannot be blank.");
-  $resp_body{'errors'} = \@errors;
-  
-}
+} 
 
 # Output JSON response
 print "Content-Type: application/json\n\n";

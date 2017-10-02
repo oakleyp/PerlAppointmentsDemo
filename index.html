@@ -6,23 +6,25 @@
     <title>Perl Demo</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="styles.css" />
     <script
     src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   <body>
     <!-- populated by renderAppointments() on load -->
     <div class="errors-container">
     </div>
     <div class="container new-appointment-container">
-      <button id="new-appt-btn">New Appointment</button>
+      <button id="new-appt-btn">New</button>
+      <button id="cancel-btn" class="button-hidden">Cancel</button>
       <form id="new-appt-form" class="form-hidden" action="bin/index.cgi" method="POST">
-        <input name="date" type="text" placeholder="Date" required/>
+        <input id="datepicker" name="date" type="text" placeholder="Date" required/>
         <input name="time" type="text" placeholder="Time" required/>
         <input name="desc" type="text" placeholder="Description" required/>
-        <button id="new-appt-submit" name="new-appt-submit" type="submit" value="Submit">Submit</button>
       </form>
     </div>
     <div class="container search-container">

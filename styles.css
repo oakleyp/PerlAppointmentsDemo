@@ -15,8 +15,8 @@ body {
 }
 
 
-.form-hidden {
-  display: none;
+.form-hidden, .button-hidden {
+  display: none !important;
 }
 
 .form-visible {
@@ -28,6 +28,13 @@ body {
 button, input {
   padding: 10px 15px;
   font-size: 1.3em;
+}
+
+.button-visible {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 1.3em;
+  margin-left: 1%;
 }
 
 input {

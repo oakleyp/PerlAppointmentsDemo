@@ -4,6 +4,8 @@
 
 //On load render all appointments
 $(document).ready(function() {
+  $('#datepicker').datepicker();
+
   getAppointments().then((data) => {
     renderAppointments(data);
   })
@@ -14,21 +16,26 @@ $(document).ready(function() {
   });
 });
 
-//New button
+//New/Add button
 $('#new-appt-btn').click(function() {
-  if($('#new-appt-form').attr('class').includes('form-hidden')) {
+  if($('#new-appt-form').attr('class').includes('form-hidden')) { // Show form
     $('#new-appt-form').removeClass();
     $('#new-appt-form').addClass('form-visible');
-  } else {
-    $('#new-appt-form').removeClass();
-    $('#new-appt-form').addClass('form-hidden');
+    $('#cancel-btn').removeClass(); 
+    $('#cancel-btn').addClass('button-visible');
+    $('#new-appt-btn').html('Add');
+  } else { // Submit form
+    postAppointment('#new-appt-form');
   }
 });
 
-//New appointment submit
-$('#new-appt-form').submit(function(e) {
-  e.preventDefault();
-  postAppointment('#new-appt-form');
+//Cancel button
+$('#cancel-btn').click(function() {
+  $('#new-appt-form').removeClass();
+  $('#new-appt-form').addClass('form-hidden');
+  $('#cancel-btn').removeClass(); 
+  $('#cancel-btn').addClass('button-hidden');
+  $('#new-appt-btn').html('New');
 });
 
 //Search button
