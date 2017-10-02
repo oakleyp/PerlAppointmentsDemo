@@ -4,7 +4,7 @@ use warnings;
 
 use DBI;
 use CGI;
-use CGI::Carp qw(fatalsToBrowser);
+#use CGI::Carp qw(fatalsToBrowser);
 use JSON;
 
 my $q = CGI->new;
@@ -59,11 +59,15 @@ my $appttime = $q->param("time");
 my $apptdesc = $q->param("desc");
 
 if(length($apptdate) && length($appttime) && length($apptdesc)) {
+
   my $sth = $dbh->prepare("INSERT INTO appointments (date, time, description) VALUES (?,?,?)");
   $sth->execute($apptdate, $appttime, $apptdesc);
+
 } elsif (length($q->param("new-appt-submit"))) {
+
   my @errors = ("Fields cannot be blank.");
   $resp_body{'errors'} = \@errors;
+  
 }
 
 # Output JSON response

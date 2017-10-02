@@ -1,0 +1,13 @@
+body {
+  
+}
+
+#new-appt-form {
+  display: none;
+}
+
+.inputs-container {
+  border: 1px solid #000;
+  padding: 5%;
+  width: 80%;
+}
