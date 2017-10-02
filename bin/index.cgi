@@ -4,7 +4,7 @@ use warnings;
 
 use DBI;
 use CGI;
-#use CGI::Carp qw(fatalsToBrowser);
+use CGI::Carp qw(fatalsToBrowser);
 use JSON;
 
 my $q = CGI->new;
@@ -29,12 +29,12 @@ sub getAppointments {
   my $query = lc(shift);
   my @result = ();
 
-  my $sth = $dbh->prepare("SELECT date, time, description FROM appointments");
+  my $sth = $dbh->prepare("SELECT date_time, description FROM appointments");
   $sth->execute();
 
   while(my $row = $sth->fetchrow_hashref) {
     # If a search query is included, push to result array if it matches any of the description texts
-    if(length($query)) {
+    if(length($query) > 0) {
       next if lc($row->{'description'}) !~ /$query/;
     }
 
@@ -54,14 +54,13 @@ my %resp_body = (
 
 
 #Accept post of new appointment
-my $apptdate = $q->param("date");
-my $appttime = $q->param("time");
+my $apptdate = $q->param("date_time");
 my $apptdesc = $q->param("desc");
 
-if(length($apptdate) && length($appttime) && length($apptdesc)) {
+if(length($apptdate) && length($apptdesc)) {
 
-  my $sth = $dbh->prepare("INSERT INTO appointments (date, time, description) VALUES (?,?,?)");
-  $sth->execute($apptdate, $appttime, $apptdesc);
+  my $sth = $dbh->prepare("INSERT INTO appointments (date_time, description) VALUES (?,?)");
+  $sth->execute($apptdate, $apptdesc);
 
 } 
 

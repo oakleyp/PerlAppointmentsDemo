@@ -69,9 +69,52 @@ function getAppointments(searchText="") {
   });
 }
 
+// Returns null if date or time are invalid.
+// otherwise, returns ISO date str
+function getDateTimeStr(formId) {
+  let dateIn = $(`${formId} > input[name='date']`).val().trim(),
+      timeIn = $(`${formId} > input[name='time']`).val().trim();
+
+  //If all is well, these should be in the format '10/04/2017' and '07:32' resp.
+  let dateStr = dateIn + ' ' + timeIn + ":00";
+
+  if(isNaN(Date.parse(dateStr))) {
+    //Try and alert what went wrong
+    if(isNaN(Date.parse(dateIn))) {
+      $(`${formId} > input[name='date']`).val('Invalid date.');
+    } 
+
+    //Check valid time string format HH:MM
+    if(!/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(timeIn)) {
+      $(`${formId} > input[name='time']`).val('Invalid time.');
+    }
+
+    console.log("Problem with datestr", dateStr);
+
+    return null;
+  } 
+
+  dateStr = new Date(dateStr).toISOString();
+
+  console.log("Got datestr from inputs: ", dateStr);
+  return dateStr;
+
+}
+
 // Post data in form id, rerender search, clear inputs
 function postAppointment(formId) {
-  $.post('bin/index.cgi', $(formId).serialize()).then(() => {
+  let pdata = "desc=" + $(`${formId} > input[name='desc']`).val(),
+      dts = getDateTimeStr(formId);
+
+  // If null, getDateTimeStr handles error display
+  if(!dts) return;
+
+  pdata = encodeURI(pdata + `&date_time=${dts}`);
+
+  console.log('Posting appt data: ', pdata);
+  
+
+  $.post('bin/index.cgi', pdata).then(() => {
     //Rerender search results
     getAppointments($('#search-input').val()).then((data) => {
       renderAppointments(data);
@@ -92,10 +135,11 @@ function renderAppointments(respJSON) {
     let data = respJSON.data;
 
     for(var i = 0; i < data.length; i++) {
+        let dateTime = new Date(data[i]['date_time']);
         trows.push(`
         <tr>
-          <td>${data[i]['date']}</td>
-          <td>${data[i]['time']}</td>
+          <td>${dateTime.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric' })}</td>
+          <td>${('0' + dateTime.getHours()).slice(-2) + ':' + ('0' + dateTime.getMinutes()).slice(-2)}</td>
           <td>${data[i]['description']}</td>
         </tr>
         `);
