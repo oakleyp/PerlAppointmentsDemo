@@ -13,23 +13,23 @@
     crossorigin="anonymous"></script>
   </head>
   <body>
+    <!-- populated by renderAppointments() on load -->
     <div class="errors-container">
-
     </div>
-    <div class="new-appointment-container">
-      <button id="new-appt-btn">New</button>
-      <form id="new-appt-form" action="bin/index.cgi" method="POST">
-        <input name="date" type="text" placeholder="Date" />
-        <input name="time" type="text" placeholder="Time" />
-        <input name="desc" type="text" placeholder="Description" />
-        <input type="submit" value="Submit" />
+    <div class="container new-appointment-container">
+      <button id="new-appt-btn">New Appointment</button>
+      <form id="new-appt-form" class="form-hidden" action="bin/index.cgi" method="POST">
+        <input name="date" type="text" placeholder="Date" required/>
+        <input name="time" type="text" placeholder="Time" required/>
+        <input name="desc" type="text" placeholder="Description" required/>
+        <button id="new-appt-submit" name="new-appt-submit" type="submit" value="Submit">Submit</button>
       </form>
     </div>
-    <div class="search-container" action="bin/index.cgi" method="GET">
-      <input id="search-input" type="text" placeholder="Search Appointments" /> 
-      <button id="search-submit">Submit</button>
+    <div class="container search-container">
+      <input id="search-input" type="text" placeholder="Search all appointments" /> 
+      <button id="search-submit">Search</button>
     </div>
-    <div class="appointments-table-container">
+    <div class="container appointments-table-container">
       <table id="appts-table">
         <thead>
           <tr>
@@ -38,7 +38,7 @@
             <th>Description</th>
           </tr>
         </thead>
-        <!-- tbody populated by renderAppointments() function -->
+        <!-- tbody populated by renderAppointments() function on load and search -->
         <tbody></tbody>
       </table>
     </div>

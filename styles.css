@@ -1,0 +1,78 @@
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address,big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul,li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption,footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video {margin: 0;padding: 0;border: 0;font-size: 100%;font: inherit;vertical-align: baseline;}article, aside, details, figcaption, figure,footer,header, hgroup, menu, nav, section {display: block;}body {line-height: 1;}ol, ul{list-style: none;}blockquote, q {quotes: none;}blockquote:before, blockquote:after,q:before, q:after {content: none;}table {border-collapse: collapse;border-spacing: 0;}
+
+body {
+  
+}
+
+.container {
+  padding: 3vh 3vw;
+}
+
+
+.error-msg {
+  color: red;
+  font-weight: bold;
+}
+
+
+.form-hidden {
+  display: none;
+}
+
+.form-visible {
+  display: block;
+  width: 100%;
+  
+}
+
+button, input {
+  padding: 10px 15px;
+  font-size: 1.3em;
+}
+
+input {
+  display: block;
+  margin: 2vh 0;
+  padding: 10px 5px;
+  font-size: 1.3em;
+  border-radius: 0;
+  width: 100%;
+}
+
+#search-input, #search-submit {
+  display: inline-block;
+}
+
+#search-input {
+  width: 75%;
+  margin-right: 1%;
+}
+
+#search-submit {
+  width: 20%;
+}
+
+#appts-table {
+  width: 100%;
+  text-align: center;
+  border: 1px solid #000;
+  border-collapse: collapse;
+}
+
+#appts-table th, #appts-table td {
+  border: 1px solid #000;
+  padding: 5px;
+}
+
+#appts-table th {
+  background: #333;
+  padding: 10px 5px;
+  color: #fff;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+#appts-table td {
+  background-color: #f3f3f3;
+}
+

@@ -22,7 +22,9 @@ my $dbh = DBI->connect($dsn, $user, $pass, {
                       FetchHashKeyName => 'NAME_lc'
                     });
 
+# Index functions
 
+# Returns hash array of all appointments in table matching search if provided
 sub getAppointments {
   my $query = lc(shift);
   my @result = ();
@@ -42,6 +44,14 @@ sub getAppointments {
   return @result;
 }
 
+my @appts = getAppointments($q->param("q")); 
+my %resp_body = (
+  "data" => \@appts,
+  "errors" => ()
+);
+
+#Destroy Functions - TODO
+
 
 #Accept post of new appointment
 my $apptdate = $q->param("date");
@@ -51,13 +61,11 @@ my $apptdesc = $q->param("desc");
 if(length($apptdate) && length($appttime) && length($apptdesc)) {
   my $sth = $dbh->prepare("INSERT INTO appointments (date, time, description) VALUES (?,?,?)");
   $sth->execute($apptdate, $appttime, $apptdesc);
+} elsif (length($q->param("new-appt-submit"))) {
+  my @errors = ("Fields cannot be blank.");
+  $resp_body{'errors'} = \@errors;
 }
 
 # Output JSON response
-my @appts = getAppointments($q->param("q")); 
-my %resp_body = (
-  "data" => \@appts
-);
-
 print "Content-Type: application/json\n\n";
 print encode_json \%resp_body;
